@@ -362,6 +362,7 @@ body {
 .header-action-btn:not(:first-child),
 .navbar { display: none; }
 
+
 .header {
   position: relative;
   padding-block-end: 80px;
@@ -537,9 +538,6 @@ body {
 .hero .scrollbar-item { min-width: 100%; }
 
 
-
-
-
 /*-----------------------------------*\
   #COLLECTION
 \*-----------------------------------*/
@@ -674,6 +672,30 @@ body {
   font-weight: var(--fw-400);
   line-height: 1;
 }
+
+.shop-button {
+  margin-top: 10px;
+  padding: 8px 14px;
+  background-color: #2d4b37;  
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.shop-button:hover {
+  background-color: #3d6b57;
+}
+
+.text-center {
+  text-align: center;
+}
+
+
 
 
 
@@ -817,9 +839,6 @@ body {
 .blog-card .card-title:is(:hover, :focus) { color: var(--hoockers-green); }
 
 .blog-card .btn-link { justify-content: center; }
-
-
-
 
 
 /*-----------------------------------*\

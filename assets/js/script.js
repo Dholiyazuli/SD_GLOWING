@@ -95,3 +95,21 @@ const scrollReveal = function () {
 scrollReveal();
 
 addEventOnElem(window, "scroll", scrollReveal);
+
+
+
+const form = document.querySelector("form");
+
+form.addEventListener("submit", function(e){
+
+  const email = form.email.value.trim();
+  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if(!pattern.test(email)){
+    alert("Please enter a valid email address");
+    e.preventDefault();
+  }
+
+});
+
+

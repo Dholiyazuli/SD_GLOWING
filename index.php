@@ -15,7 +15,7 @@
   <!-- 
     - custom css link
   -->
-  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/style01.css">
 
   <!-- 
     - google font link
@@ -44,7 +44,7 @@
 
     <div class="alert">
       <div class="container">
-        <p class="alert-text">Free Shipping On All U.S. Orders $50+</p>
+        <p class="alert-text">Free Shipping On All U.S. Orders ₹10000</p>
       </div>
     </div>
 
@@ -71,9 +71,33 @@
 
         <div class="header-actions">
 
-          <button class="header-action-btn" aria-label="user">
-            <ion-icon name="person-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
-          </button>
+        <?php
+// make sure session is started at very top of page
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
+<?php if(isset($_SESSION['user_id'])) { ?>
+
+    <!-- User already logged in → go to profile -->
+    <a href="profile.php">
+      <button class="header-action-btn" aria-label="user">
+        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+      </button>
+    </a>
+
+<?php } else { ?>
+
+    <!-- User NOT logged in → go to create/login -->
+    <a href="account.php">
+      <button class="header-action-btn" aria-label="user">
+        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+      </button>
+    </a>
+
+<?php } ?>
+
 
           <button class="header-action-btn" aria-label="favourite item">
             <ion-icon name="star-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
@@ -82,7 +106,7 @@
           </button>
 
           <button class="header-action-btn" aria-label="cart item">
-            <data class="btn-text" value="0">$0.00</data>
+            <data class="btn-text" value="0">₹0.00</data>
 
             <ion-icon name="bag-handle-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
 
@@ -202,7 +226,7 @@
                     Made using clean, non-toxic ingredients, our products are designed for everyone.
                   </p>
 
-                  <p class="price">Starting at $7.99</p>
+                  <p class="price">Starting at ₹100.00</p>
 
                   <a href="#" class="btn btn-primary">Shop Now</a>
 
@@ -225,9 +249,9 @@
                     Made using clean, non-toxic ingredients, our products are designed for everyone.
                   </p>
 
-                  <p class="price">Starting at $7.99</p>
+                  <p class="price">Starting at ₹100.00</p>
 
-                  <a href="#" class="btn btn-primary">Shop Now</a>
+                  <a href="#"  class="btn btn-primary">Shop Now</a>
 
                 </div>
 
@@ -248,7 +272,7 @@
                     Made using clean, non-toxic ingredients, our products are designed for everyone.
                   </p>
 
-                  <p class="price">Starting at $7.99</p>
+                  <p class="price">Starting at ₹100.00  </p>
 
                   <a href="#" class="btn btn-primary">Shop Now</a>
 
@@ -261,10 +285,6 @@
 
         </div>
       </section>
-
-
-
-
 
       <!-- 
         - #COLLECTION
@@ -280,7 +300,7 @@
 
                 <h2 class="h2 card-title">Summer Collection</h2>
 
-                <p class="card-text">Starting at $17.99</p>
+                <p class="card-text">Starting at ₹1000.00</p>
 
                 <a href="#" class="btn-link">
                   <span class="span">Shop Now</span>
@@ -316,7 +336,7 @@
 
                 <h2 class="h2 card-title">Buy 1 Get 1</h2>
 
-                <p class="card-text">Starting at $7.99</p>
+                <p class="card-text">Starting at ₹100.00</p>
 
                 <a href="#" class="btn-link">
                   <span class="span">Discover Now</span>
@@ -346,9 +366,9 @@
         <div class="container">
 
           <div class="title-wrapper">
-            <h2 class="h2 section-title">Our Bestsellers</h2>
+            <h2 class="h2 section-title">Skin-Care Product</h2>
 
-            <a href="#" class="btn-link">
+            <a href="#shop" class="btn-link">
               <span class="span">Shop All Products</span>
 
               <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
@@ -386,9 +406,9 @@
                 <div class="card-content">
 
                   <div class="price">
-                    <del class="del">$39.00</del>
+                    <del class="del">₹1000.00</del>
 
-                    <span class="span">$29.00</span>
+                    <span class="span">₹800.00</span>
                   </div>
 
                   <h3>
@@ -410,7 +430,7 @@
                   </div>
 
                 </div>
-
+                <a href="#" onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
               </div>
             </li>
 
@@ -441,7 +461,7 @@
                 <div class="card-content">
 
                   <div class="price">
-                    <span class="span">$29.00</span>
+                    <span class="span">₹1000.00</span>
                   </div>
 
                   <h3>
@@ -462,7 +482,9 @@
 
                   </div>
 
+
                 </div>
+                <a href="#" onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
 
               </div>
             </li>
@@ -494,7 +516,7 @@
                 <div class="card-content">
 
                   <div class="price">
-                    <span class="span">$29.00</span>
+                    <span class="span">₹500.00</span>
                   </div>
 
                   <h3>
@@ -516,6 +538,7 @@
                   </div>
 
                 </div>
+                <a href="#" onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
 
               </div>
             </li>
@@ -547,7 +570,7 @@
                 <div class="card-content">
 
                   <div class="price">
-                    <span class="span">$29.00</span>
+                    <span class="span">₹199.00</span>
                   </div>
 
                   <h3>
@@ -569,6 +592,7 @@
                   </div>
 
                 </div>
+                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
 
               </div>
             </li>
@@ -602,9 +626,9 @@
                 <div class="card-content">
 
                   <div class="price">
-                    <del class="del">$39.00</del>
+                    <del class="del">₹3000.00</del>
 
-                    <span class="span">$29.00</span>
+                    <span class="span">₹2000.00</span>
                   </div>
 
                   <h3>
@@ -626,6 +650,7 @@
                   </div>
 
                 </div>
+                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
 
               </div>
             </li>
@@ -657,7 +682,7 @@
                 <div class="card-content">
 
                   <div class="price">
-                    <span class="span">$29.00</span>
+                    <span class="span">₹100.00</span>
                   </div>
 
                   <h3>
@@ -679,29 +704,10 @@
                   </div>
 
                 </div>
+                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
 
               </div>
             </li>
-
-          </ul>
-
-        </div>
-      </section>
-
-      <section class="section shop" id="shop" aria-label="shop" data-section>
-        <div class="container">
-
-          <div class="title-wrapper">
-            <h2 class="h2 section-title">Under $25</h2>
-
-            <a href="#" class="btn-link">
-              <span class="span">Shop All Products</span>
-
-              <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
-            </a>
-          </div>
-
-          <ul class="has-scrollbar">
 
             <li class="scrollbar-item">
               <div class="shop-card">
@@ -732,9 +738,9 @@
                 <div class="card-content">
 
                   <div class="price">
-                    <del class="del">$39.00</del>
+                    <del class="del">₹1500.00</del>
 
-                    <span class="span">$29.00</span>
+                    <span class="span">₹1000.00</span>
                   </div>
 
                   <h3>
@@ -756,6 +762,7 @@
                   </div>
 
                 </div>
+                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
 
               </div>
             </li>
@@ -787,7 +794,7 @@
                 <div class="card-content">
 
                   <div class="price">
-                    <span class="span">$29.00</span>
+                    <span class="span">₹500.00</span>
                   </div>
 
                   <h3>
@@ -809,6 +816,7 @@
                   </div>
 
                 </div>
+                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
 
               </div>
             </li>
@@ -840,7 +848,7 @@
                 <div class="card-content">
 
                   <div class="price">
-                    <span class="span">$29.00</span>
+                    <span class="span">₹499.99</span>
                   </div>
 
                   <h3>
@@ -862,6 +870,7 @@
                   </div>
 
                 </div>
+                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
 
               </div>
             </li>
@@ -893,7 +902,7 @@
                 <div class="card-content">
 
                   <div class="price">
-                    <span class="span">$29.00</span>
+                    <span class="span">₹1000.00</span>
                   </div>
 
                   <h3>
@@ -915,6 +924,7 @@
                   </div>
 
                 </div>
+                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
 
               </div>
             </li>
@@ -948,9 +958,9 @@
                 <div class="card-content">
 
                   <div class="price">
-                    <del class="del">$39.00</del>
+                    <del class="del">₹1000.00</del>
 
-                    <span class="span">$29.00</span>
+                    <span class="span">₹800.00</span>
                   </div>
 
                   <h3>
@@ -972,6 +982,85 @@
                   </div>
 
                 </div>
+                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+
+      <section class="section shop" id="shop2" aria-label="shop" data-section>
+        <div class="container">
+
+          <div class="title-wrapper">
+            <h2 class="h2 section-title">Make-Up Product</h2>
+
+            <a href="#shop2" class="btn-link">
+              <span class="span">Shop All Products</span>
+
+              <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+            </a>
+          </div>
+
+          <ul class="has-scrollbar">
+
+            <li class="scrollbar-item">
+              <div class="shop-card">
+
+                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
+                  <img src="./assets/images/mackup-1.jpg" width="540" height="720" loading="lazy"
+                    alt="Facial cleanser" class="img-cover">
+
+                  <span class="badge" aria-label="20% off">-20%</span>
+
+                  <div class="card-actions">
+
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="add to whishlist">
+                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="compare">
+                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                  </div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="price">
+                    <del class="del">₹1500.00</del>
+
+                    <span class="span">₹1000.00</span>
+                  </div>
+
+                  <h3>
+                    <a href="#" class="card-title">Blush</a>
+                  </h3>
+
+                  <div class="card-rating">
+
+                    <div class="rating-wrapper" aria-label="5 start rating">
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                    </div>
+
+                    <p class="rating-text">5170 reviews</p>
+
+                  </div>
+
+                </div>
+                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
 
               </div>
             </li>
@@ -980,7 +1069,115 @@
               <div class="shop-card">
 
                 <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-                  <img src="./assets/images/product-01.jpg" width="540" height="720" loading="lazy"
+                  <img src="./assets/images/mackup-2.jpg" width="540" height="720" loading="lazy"
+                    alt="Bio-shroom Rejuvenating Serum" class="img-cover">
+
+                  <div class="card-actions">
+
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="add to whishlist">
+                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="compare">
+                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                  </div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="price">
+                    <span class="span">₹1500.00</span>
+                  </div>
+
+                  <h3>
+                    <a href="#" class="card-title">Lipstick</a>
+                  </h3>
+
+                  <div class="card-rating">
+
+                    <div class="rating-wrapper" aria-label="5 start rating">
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                    </div>
+
+                    <p class="rating-text">5170 reviews</p>
+
+                  </div>
+
+                </div>
+                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
+
+              </div>
+            </li>
+
+            <li class="scrollbar-item">
+              <div class="shop-card">
+
+                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
+                  <img src="./assets/images/mackup-3.jpg" width="540" height="720" loading="lazy"
+                    alt="Coffee Bean Caffeine Eye Cream" class="img-cover">
+
+                  <div class="card-actions">
+
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="add to whishlist">
+                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="compare">
+                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                  </div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="price">
+                    <span class="span">₹900.00</span>
+                  </div>
+
+                  <h3>
+                    <a href="#" class="card-title">Compact Powder</a>
+                  </h3>
+
+                  <div class="card-rating">
+
+                    <div class="rating-wrapper" aria-label="5 start rating">
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                    </div>
+
+                    <p class="rating-text">5170 reviews</p>
+
+                  </div>
+
+                </div>
+                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
+
+              </div>
+            </li>
+
+            <li class="scrollbar-item">
+              <div class="shop-card">
+
+                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
+                  <img src="./assets/images/mackup-4.jpg" width="540" height="720" loading="lazy"
                     alt="Facial cleanser" class="img-cover">
 
                   <div class="card-actions">
@@ -1003,11 +1200,11 @@
                 <div class="card-content">
 
                   <div class="price">
-                    <span class="span">$29.00</span>
+                    <span class="span">₹2000.00</span>
                   </div>
 
                   <h3>
-                    <a href="#" class="card-title">Facial cleanser</a>
+                    <a href="#" class="card-title">Foundation</a>
                   </h3>
 
                   <div class="card-rating">
@@ -1025,6 +1222,336 @@
                   </div>
 
                 </div>
+                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
+
+              </div>
+            </li>
+
+            <li class="scrollbar-item">
+              <div class="shop-card">
+
+                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
+                  <img src="./assets/images/mackup-5.jpg" width="540" height="720" loading="lazy"
+                    alt="Coffee Bean Caffeine Eye Cream" class="img-cover">
+
+                  <span class="badge" aria-label="20% off">-20%</span>
+
+                  <div class="card-actions">
+
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="add to whishlist">
+                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="compare">
+                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                  </div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="price">
+                    <del class="del">₹1500.00</del>
+
+                    <span class="span">₹1000.00</span>
+                  </div>
+
+                  <h3>
+                    <a href="#" class="card-title">Eye Shadow</a>
+                  </h3>
+
+                  <div class="card-rating">
+
+                    <div class="rating-wrapper" aria-label="5 start rating">
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                    </div>
+
+                    <p class="rating-text">5170 reviews</p>
+
+                  </div>
+
+                </div>
+                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
+
+              </div>
+            </li>
+
+            <li class="scrollbar-item">
+              <div class="shop-card">
+
+                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
+                  <img src="./assets/images/mackup-6.jpg" width="540" height="720" loading="lazy"
+                    alt="Facial cleanser" class="img-cover">
+
+                  <div class="card-actions">
+
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="add to whishlist">
+                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="compare">
+                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                  </div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="price">
+                    <span class="span">₹450.00</span>
+                  </div>
+
+                  <h3>
+                    <a href="#" class="card-title">Primer</a>
+                  </h3>
+
+                  <div class="card-rating">
+
+                    <div class="rating-wrapper" aria-label="5 start rating">
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                    </div>
+
+                    <p class="rating-text">5170 reviews</p>
+
+                  </div>
+
+                </div>
+                <a href="#" onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
+
+              </div>
+            </li>
+            <li class="scrollbar-item">
+              <div class="shop-card">
+
+                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
+                  <img src="./assets/images/mackup-7.jpg" width="540" height="720" loading="lazy"
+                    alt="Facial cleanser" class="img-cover">
+
+                  <div class="card-actions">
+
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="add to whishlist">
+                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="compare">
+                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                  </div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="price">
+                    <span class="span">₹500.00</span>
+                  </div>
+
+                  <h3>
+                    <a href="#" class="card-title">Highlighter</a>
+                  </h3>
+
+                  <div class="card-rating">
+
+                    <div class="rating-wrapper" aria-label="5 start rating">
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                    </div>
+
+                    <p class="rating-text">5170 reviews</p>
+
+                  </div>
+
+                </div>
+                <a href="#" onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
+
+              </div>
+            </li>
+
+            <li class="scrollbar-item">
+              <div class="shop-card">
+
+                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
+                  <img src="./assets/images/mackup-8.jpg" width="540" height="720" loading="lazy"
+                    alt="Facial cleanser" class="img-cover">
+
+                <span class="badge" aria-label="20% off">-20%</span>
+
+                  <div class="card-actions">
+
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="add to whishlist">
+                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="compare">
+                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                  </div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="price">
+                    <span class="span">₹150.00</span>
+                  </div>
+
+                  <h3>
+                    <a href="#" class="card-title">Kajal</a>
+                  </h3>
+
+                  <div class="card-rating">
+
+                    <div class="rating-wrapper" aria-label="5 start rating">
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                    </div>
+
+                    <p class="rating-text">5170 reviews</p>
+
+                  </div>
+
+                </div>
+                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
+
+              </div>
+            </li>
+
+            <li class="scrollbar-item">
+              <div class="shop-card">
+
+                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
+                  <img src="./assets/images/mackup-10.jpg" width="540" height="720" loading="lazy"
+                    alt="Facial cleanser" class="img-cover">
+
+                  <div class="card-actions">
+
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="add to whishlist">
+                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="compare">
+                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                  </div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="price">
+                    <span class="span">₹100.00</span>
+                  </div>
+
+                  <h3>
+                    <a href="#" class="card-title">Lip Gloss</a>
+                  </h3>
+
+                  <div class="card-rating">
+
+                    <div class="rating-wrapper" aria-label="5 start rating">
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                    </div>
+
+                    <p class="rating-text">5170 reviews</p>
+
+                  </div>
+
+                </div>
+                <a href="#" onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
+
+              </div>
+            </li>
+
+            <li class="scrollbar-item">
+              <div class="shop-card">
+
+                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
+                  <img src="./assets/images/mackup-9.jpg" width="540" height="720" loading="lazy"
+                    alt="Facial cleanser" class="img-cover">
+
+                  <div class="card-actions">
+
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="add to whishlist">
+                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                    <button class="action-btn" aria-label="compare">
+                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
+                    </button>
+
+                  </div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="price">
+                    <span class="span">₹300.00</span>
+                  </div>
+
+                  <h3>
+                    <a href="#" class="card-title">Mascara</a>
+                  </h3>
+
+                  <div class="card-rating">
+
+                    <div class="rating-wrapper" aria-label="5 start rating">
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                    </div>
+
+                    <p class="rating-text">5170 reviews</p>
+
+                  </div>
+
+                </div>
+                <a href="#" onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
 
               </div>
             </li>
@@ -1033,10 +1560,6 @@
 
         </div>
       </section>
-
-
-
-
 
       <!-- 
         - #BANNER
@@ -1052,9 +1575,9 @@
 
                 <p class="card-subtitle">New Collection</p>
 
-                <h2 class="h2 card-title">Discover Our Autumn Skincare</h2>
+                <h2 class="h2 card-title">Glow Naturally with Our GLOWING Product</h2>
 
-                <a href="#" class="btn btn-secondary">Explore More</a>
+                <a href="#shop" class="btn btn-secondary">Explore More</a>
 
                 <div class="has-bg-image" style="background-image: url('./assets/images/banner-1.jpg')"></div>
 
@@ -1070,9 +1593,9 @@
                   Makeup with extended range in colors for every human.
                 </p>
 
-                <a href="#" class="btn btn-secondary">Shop Sale</a>
+                <a href="#shop2" class="btn btn-secondary">Shop Sale</a>
 
-                <div class="has-bg-image" style="background-image: url('./assets/images/banner-2.jpg')"></div>
+                <div class="has-bg-image" style="background-image: url('./assets/images/shop sale.jpg')"></div>
 
               </div>
             </li>
@@ -1185,14 +1708,47 @@
 
             <div class="countdown">
 
-              <span class="time" aria-label="days">15</span>
-              <span class="time" aria-label="hours">21</span>
-              <span class="time" aria-label="minutes">46</span>
-              <span class="time" aria-label="seconds">08</span>
+              <span class="time" aria-label="days">00</span>
+              <span class="time" aria-label="hours">00</span>
+              <span class="time" aria-label="minutes">00</span>
+              <span class="time" aria-label="seconds">00</span>
 
             </div>
+            <script>
+  // Set offer end date & time
+  const offerEndDate = new Date("2026-01-31 23:12:59").getTime();
 
-            <a href="#" class="btn btn-primary">Get Only $39.00</a>
+  const countdownItems = document.querySelectorAll(".countdown .time");
+
+  const timer = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = offerEndDate - now;
+
+    if (distance <= 0) {
+      clearInterval(timer);
+      countdownItems[0].innerText = "00";
+      countdownItems[1].innerText = "00";
+      countdownItems[2].innerText = "00";
+      countdownItems[3].innerText = "00";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    countdownItems[0].innerText = String(days).padStart(2, "0");
+    countdownItems[1].innerText = String(hours).padStart(2, "0");
+    countdownItems[2].innerText = String(minutes).padStart(2, "0");
+    countdownItems[3].innerText = String(seconds).padStart(2, "0");
+
+  }, 1000);
+</script>
+
+            
+
+            <a href="#shop" class="btn btn-primary">Get Only ₹1000.00</a>
 
           </div>
 
@@ -1223,16 +1779,14 @@
                 </figure>
 
                 <h3 class="h3">
-                  <a href="#" class="card-title">Find a Store</a>
+                  <a href="https://www.google.com/maps/place/Glowing/@21.1747791,72.823823,17z/data=!3m1!4b1!4m6!3m5!1s0x3be04f4ca80232d9:0xb50ba7edc32318e1!8m2!3d21.1747741!4d72.8263979!16s%2Fg%2F11wv8442cz?entry=ttu&g_ep=EgoyMDI2MDEwNy4wIKXMDSoKLDEwMDc5MjA3M0gBUAM%3D" class="card-title">Find a Store</a>
                 </h3>
 
-                <a href="#" class="btn-link">
-                  <span class="span">Our Store</span>
+                <a href="https://www.google.com/maps/place/Glowing/@21.1747791,72.823823,17z/data=!3m1!4b1!4m6!3m5!1s0x3be04f4ca80232d9:0xb50ba7edc32318e1!8m2!3d21.1747741!4d72.8263979!16s%2Fg%2F11wv8442cz?entry=ttu&g_ep=EgoyMDI2MDEwNy4wIKXMDSoKLDEwMDc5MjA3M0gBUAM%3D"" class="btn-link">
+                  <span class="span">Store</span>
 
                   <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
                 </a>
-
-              </div>
             </li>
 
             <li class="flex-item">
@@ -1244,11 +1798,11 @@
                 </figure>
 
                 <h3 class="h3">
-                  <a href="#" class="card-title">From Our Blog</a>
+                  <a href="ourblog.php" class="card-title">From Our Blog</a>
                 </h3>
 
-                <a href="#" class="btn-link">
-                  <span class="span">Our Store</span>
+                <a href="ourblog.php" class="btn-link">
+                  <span class="span">Blog</span>
 
                   <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
                 </a>
@@ -1265,16 +1819,16 @@
                 </figure>
 
                 <h3 class="h3">
-                  <a href="#" class="card-title">Our Story</a>
+                  <a href="ourstory.php" class="card-title">Our Story</a>
                 </h3>
 
-                <a href="#" class="btn-link">
-                  <span class="span">Our Store</span>
+                <a href="ourstory.php" class="btn-link">
+                  <span class="span">Story</span>
 
                   <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
                 </a>
-
               </div>
+
             </li>
 
           </ul>
@@ -1284,10 +1838,6 @@
 
     </article>
   </main>
-
-
-
-
 
   <!-- 
     - #FOOTER
@@ -1380,7 +1930,7 @@
             Enter your email below to be the first to know about new collections and product launches.
           </p>
 
-          <form action="" class="newsletter-form">
+          <form action="subscribe.php" class="newsletter-form" method="POST" id="subscribeForm">
             <input type="email" name="email_address" placeholder="Enter your email address" required
               class="email-field">
 
@@ -1395,7 +1945,7 @@
 
         <div class="wrapper">
           <p class="copyright">
-            &copy; 2022 codewithsadee
+            &copy; 2026 GLOWING. Designed with care, confidence & clean beauty.
           </p>
 
           <ul class="social-list">
