@@ -105,15 +105,31 @@ if (session_status() === PHP_SESSION_NONE) {
             <span class="btn-badge">0</span>
           </button>
 
-          <button class="header-action-btn" aria-label="cart item">
-            <data class="btn-text" value="0">₹0.00</data>
+          <button class="header-action-btn" aria-label="cart item" onclick="openCart()">
+            <data class="btn-text" id="cart-price" value="0">₹0.00</data>
 
             <ion-icon name="bag-handle-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
 
-            <span class="btn-badge">0</span>
+            <span class="btn-badge" id="cart-count">0</span>
           </button>
 
         </div>
+          <div id="cart-overlay"></div>
+          <div id="cart-sidebar">
+
+          <div class="cart-header">
+          <h2>Your Cart</h2>
+          <button onclick="closeCart()">✖</button>
+          </div>
+
+          <div id="cart-items"></div>
+
+          <div class="cart-footer">
+          <h3>Total: ₹<span id="cart-total">0</span></h3>
+          <button class="checkout-btn">Checkout</button>
+        </div>
+
+</div>        
 
         <nav class="navbar">
           <ul class="navbar-list">
@@ -381,14 +397,14 @@ if (session_status() === PHP_SESSION_NONE) {
               <div class="shop-card">
 
                 <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-                  <img src="./assets/images/product-01.jpg" width="540" height="720" loading="lazy"
+                  <img src="./assets/images/product-1.jpg" width="540" height="720" loading="lazy"
                     alt="Facial cleanser" class="img-cover">
 
                   <span class="badge" aria-label="20% off">-20%</span>
 
                   <div class="card-actions">
 
-                    <button class="action-btn" aria-label="add to cart">
+                    <button class="action-btn"onclick="addToCart('Facial cleanser',800,'./assets/images/product-1.jpg')"aria-label="add to cart">
                       <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                     </button>
 
@@ -443,16 +459,12 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn" aria-label="add to cart">
+                    <button class="action-btn"onclick="addToCart('Bio-shroom Rejuvenating Serum',1000,'./assets/images/product-02.jpg')"aria-label="add to cart">
                       <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                   </div>
@@ -498,16 +510,12 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn" aria-label="add to cart">
+                    <button class="action-btn"onclick="addToCart('Coffee Bean Caffeine Eye Cream',500,'./assets/images/product-03.jpg')"aria-label="add to cart">
                       <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                   </div>
@@ -552,16 +560,12 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn" aria-label="add to cart">
+                    <button class="action-btn"onclick="addToCart('Facial cleanser',800,'./assets/images/product-04.jpg')"aria-label="add to cart">
                       <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                   </div>
@@ -608,16 +612,12 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn" aria-label="add to cart">
+                    <button class="action-btn"onclick="addToCart('Coffee Bean Caffeine Eye Cream',500,'./assets/images/product-05.jpg')"aria-label="add to cart">
                       <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                   </div>
@@ -664,16 +664,12 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn" aria-label="add to cart">
+                    <button class="action-btn"onclick="addToCart('Coffee Bean Caffeine Eye Cream',500,'./assets/images/product-06.jpg')"aria-label="add to cart">
                       <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                   </div>
@@ -720,16 +716,12 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn" aria-label="add to cart">
+                    <button class="action-btn"onclick="addToCart('Coffee Bean Caffeine Eye Cream',500,'./assets/images/product-07.jpg')"aria-label="add to cart">
                       <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                   </div>
@@ -776,16 +768,12 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn" aria-label="add to cart">
+                    <button class="action-btn"onclick="addToCart('Bio-shroom Rejuvenating Serum',500,'./assets/images/product-08.jpg')"aria-label="add to cart">
                       <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                   </div>
@@ -830,16 +818,12 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn" aria-label="add to cart">
+                    <button class="action-btn"onclick="addToCart('Coffee Bean Caffeine Eye Cream',500,'./assets/images/product-09.jpg')"aria-label="add to cart">
                       <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                   </div>
@@ -884,16 +868,12 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn" aria-label="add to cart">
+                    <button class="action-btn"onclick="addToCart('Facial cleanser',800,'./assets/images/product-10.jpg')"aria-label="add to cart">
                       <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                   </div>
@@ -940,16 +920,12 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn" aria-label="add to cart">
+                    <button class="action-btn"onclick="addToCart('Coffee Bean Caffeine Eye Cream',500,'./assets/images/product-11.jpg')"aria-label="add to cart">
                       <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
                     </button>
 
                   </div>
@@ -983,575 +959,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
                 </div>
                 <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
-
-              </div>
-            </li>
-
-          </ul>
-
-        </div>
-      </section>
-
-      <section class="section shop" id="shop2" aria-label="shop" data-section>
-        <div class="container">
-
-          <div class="title-wrapper">
-            <h2 class="h2 section-title">Make-Up Product</h2>
-
-            <a href="#shop2" class="btn-link">
-              <span class="span">Shop All Products</span>
-
-              <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
-            </a>
-          </div>
-
-          <ul class="has-scrollbar">
-
-            <li class="scrollbar-item">
-              <div class="shop-card">
-
-                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-                  <img src="./assets/images/mackup-1.jpg" width="540" height="720" loading="lazy"
-                    alt="Facial cleanser" class="img-cover">
-
-                  <span class="badge" aria-label="20% off">-20%</span>
-
-                  <div class="card-actions">
-
-                    <button class="action-btn" aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to whishlist">
-                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <div class="price">
-                    <del class="del">₹1500.00</del>
-
-                    <span class="span">₹1000.00</span>
-                  </div>
-
-                  <h3>
-                    <a href="#" class="card-title">Blush</a>
-                  </h3>
-
-                  <div class="card-rating">
-
-                    <div class="rating-wrapper" aria-label="5 start rating">
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                    </div>
-
-                    <p class="rating-text">5170 reviews</p>
-
-                  </div>
-
-                </div>
-                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
-
-              </div>
-            </li>
-
-            <li class="scrollbar-item">
-              <div class="shop-card">
-
-                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-                  <img src="./assets/images/mackup-2.jpg" width="540" height="720" loading="lazy"
-                    alt="Bio-shroom Rejuvenating Serum" class="img-cover">
-
-                  <div class="card-actions">
-
-                    <button class="action-btn" aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to whishlist">
-                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <div class="price">
-                    <span class="span">₹1500.00</span>
-                  </div>
-
-                  <h3>
-                    <a href="#" class="card-title">Lipstick</a>
-                  </h3>
-
-                  <div class="card-rating">
-
-                    <div class="rating-wrapper" aria-label="5 start rating">
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                    </div>
-
-                    <p class="rating-text">5170 reviews</p>
-
-                  </div>
-
-                </div>
-                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
-
-              </div>
-            </li>
-
-            <li class="scrollbar-item">
-              <div class="shop-card">
-
-                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-                  <img src="./assets/images/mackup-3.jpg" width="540" height="720" loading="lazy"
-                    alt="Coffee Bean Caffeine Eye Cream" class="img-cover">
-
-                  <div class="card-actions">
-
-                    <button class="action-btn" aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to whishlist">
-                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <div class="price">
-                    <span class="span">₹900.00</span>
-                  </div>
-
-                  <h3>
-                    <a href="#" class="card-title">Compact Powder</a>
-                  </h3>
-
-                  <div class="card-rating">
-
-                    <div class="rating-wrapper" aria-label="5 start rating">
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                    </div>
-
-                    <p class="rating-text">5170 reviews</p>
-
-                  </div>
-
-                </div>
-                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
-
-              </div>
-            </li>
-
-            <li class="scrollbar-item">
-              <div class="shop-card">
-
-                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-                  <img src="./assets/images/mackup-4.jpg" width="540" height="720" loading="lazy"
-                    alt="Facial cleanser" class="img-cover">
-
-                  <div class="card-actions">
-
-                    <button class="action-btn" aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to whishlist">
-                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <div class="price">
-                    <span class="span">₹2000.00</span>
-                  </div>
-
-                  <h3>
-                    <a href="#" class="card-title">Foundation</a>
-                  </h3>
-
-                  <div class="card-rating">
-
-                    <div class="rating-wrapper" aria-label="5 start rating">
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                    </div>
-
-                    <p class="rating-text">5170 reviews</p>
-
-                  </div>
-
-                </div>
-                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
-
-              </div>
-            </li>
-
-            <li class="scrollbar-item">
-              <div class="shop-card">
-
-                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-                  <img src="./assets/images/mackup-5.jpg" width="540" height="720" loading="lazy"
-                    alt="Coffee Bean Caffeine Eye Cream" class="img-cover">
-
-                  <span class="badge" aria-label="20% off">-20%</span>
-
-                  <div class="card-actions">
-
-                    <button class="action-btn" aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to whishlist">
-                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <div class="price">
-                    <del class="del">₹1500.00</del>
-
-                    <span class="span">₹1000.00</span>
-                  </div>
-
-                  <h3>
-                    <a href="#" class="card-title">Eye Shadow</a>
-                  </h3>
-
-                  <div class="card-rating">
-
-                    <div class="rating-wrapper" aria-label="5 start rating">
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                    </div>
-
-                    <p class="rating-text">5170 reviews</p>
-
-                  </div>
-
-                </div>
-                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
-
-              </div>
-            </li>
-
-            <li class="scrollbar-item">
-              <div class="shop-card">
-
-                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-                  <img src="./assets/images/mackup-6.jpg" width="540" height="720" loading="lazy"
-                    alt="Facial cleanser" class="img-cover">
-
-                  <div class="card-actions">
-
-                    <button class="action-btn" aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to whishlist">
-                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <div class="price">
-                    <span class="span">₹450.00</span>
-                  </div>
-
-                  <h3>
-                    <a href="#" class="card-title">Primer</a>
-                  </h3>
-
-                  <div class="card-rating">
-
-                    <div class="rating-wrapper" aria-label="5 start rating">
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                    </div>
-
-                    <p class="rating-text">5170 reviews</p>
-
-                  </div>
-
-                </div>
-                <a href="#" onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
-
-              </div>
-            </li>
-            <li class="scrollbar-item">
-              <div class="shop-card">
-
-                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-                  <img src="./assets/images/mackup-7.jpg" width="540" height="720" loading="lazy"
-                    alt="Facial cleanser" class="img-cover">
-
-                  <div class="card-actions">
-
-                    <button class="action-btn" aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to whishlist">
-                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <div class="price">
-                    <span class="span">₹500.00</span>
-                  </div>
-
-                  <h3>
-                    <a href="#" class="card-title">Highlighter</a>
-                  </h3>
-
-                  <div class="card-rating">
-
-                    <div class="rating-wrapper" aria-label="5 start rating">
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                    </div>
-
-                    <p class="rating-text">5170 reviews</p>
-
-                  </div>
-
-                </div>
-                <a href="#" onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
-
-              </div>
-            </li>
-
-            <li class="scrollbar-item">
-              <div class="shop-card">
-
-                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-                  <img src="./assets/images/mackup-8.jpg" width="540" height="720" loading="lazy"
-                    alt="Facial cleanser" class="img-cover">
-
-                <span class="badge" aria-label="20% off">-20%</span>
-
-                  <div class="card-actions">
-
-                    <button class="action-btn" aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to whishlist">
-                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <div class="price">
-                    <span class="span">₹150.00</span>
-                  </div>
-
-                  <h3>
-                    <a href="#" class="card-title">Kajal</a>
-                  </h3>
-
-                  <div class="card-rating">
-
-                    <div class="rating-wrapper" aria-label="5 start rating">
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                    </div>
-
-                    <p class="rating-text">5170 reviews</p>
-
-                  </div>
-
-                </div>
-                <a href="#"  onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
-
-              </div>
-            </li>
-
-            <li class="scrollbar-item">
-              <div class="shop-card">
-
-                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-                  <img src="./assets/images/mackup-10.jpg" width="540" height="720" loading="lazy"
-                    alt="Facial cleanser" class="img-cover">
-
-                  <div class="card-actions">
-
-                    <button class="action-btn" aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to whishlist">
-                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <div class="price">
-                    <span class="span">₹100.00</span>
-                  </div>
-
-                  <h3>
-                    <a href="#" class="card-title">Lip Gloss</a>
-                  </h3>
-
-                  <div class="card-rating">
-
-                    <div class="rating-wrapper" aria-label="5 start rating">
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                    </div>
-
-                    <p class="rating-text">5170 reviews</p>
-
-                  </div>
-
-                </div>
-                <a href="#" onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
-
-              </div>
-            </li>
-
-            <li class="scrollbar-item">
-              <div class="shop-card">
-
-                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
-                  <img src="./assets/images/mackup-9.jpg" width="540" height="720" loading="lazy"
-                    alt="Facial cleanser" class="img-cover">
-
-                  <div class="card-actions">
-
-                    <button class="action-btn" aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="add to whishlist">
-                      <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                    <button class="action-btn" aria-label="compare">
-                      <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
-                    </button>
-
-                  </div>
-                </div>
-
-                <div class="card-content">
-
-                  <div class="price">
-                    <span class="span">₹300.00</span>
-                  </div>
-
-                  <h3>
-                    <a href="#" class="card-title">Mascara</a>
-                  </h3>
-
-                  <div class="card-rating">
-
-                    <div class="rating-wrapper" aria-label="5 start rating">
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                      <ion-icon name="star" aria-hidden="true"></ion-icon>
-                    </div>
-
-                    <p class="rating-text">5170 reviews</p>
-
-                  </div>
-
-                </div>
-                <a href="#" onclick="window.open('https://wa.me/6354119053', '_blank')" class="shop-button">Shop Now</a>
 
               </div>
             </li>

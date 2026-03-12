@@ -113,3 +113,101 @@ form.addEventListener("submit", function(e){
 });
 
 
+/*-----------------------------------*\
+  # CART SYSTEM
+\*-----------------------------------*/
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+const cartSidebar = document.getElementById("cart-sidebar");
+const cartOverlay = document.getElementById("cart-overlay");
+const cartItems = document.getElementById("cart-items");
+const cartTotal = document.getElementById("cart-total");
+const cartCount = document.getElementById("cart-count");
+const cartPrice = document.getElementById("cart-price");
+
+/* OPEN CART */
+function openCart(){
+  cartSidebar.classList.add("active");
+  cartOverlay.style.display="block";
+  renderCart();
+}
+
+/* CLOSE CART */
+function closeCart(){
+  cartSidebar.classList.remove("active");
+  cartOverlay.style.display="none";
+}
+
+/* ADD PRODUCT */
+function addToCart(name,price,image){
+
+  const product={
+    name:name,
+    price:price,
+    image:image,
+    qty:1
+  };
+
+  cart.push(product);
+
+  localStorage.setItem("cart",JSON.stringify(cart));
+
+  renderCart();
+  openCart();
+}
+
+/* DISPLAY CART */
+function renderCart(){
+
+  cartItems.innerHTML="";
+  let total=0;
+
+  cart.forEach((item,index)=>{
+
+    total+=item.price;
+
+    cartItems.innerHTML+=`
+
+      <div class="cart-item">
+
+        <img src="${item.image}">
+
+        <div>
+          <p>${item.name}</p>
+          <p>₹${item.price}</p>
+        </div>
+
+        <button onclick="removeItem(${index})">❌</button>
+
+      </div>
+
+    `;
+
+  });
+
+  cartTotal.innerText=total;
+  cartCount.innerText=cart.length;
+  cartPrice.innerText="₹"+total+".00";
+
+}
+
+/* REMOVE ITEM */
+
+function removeItem(index){
+
+  cart.splice(index,1);
+
+  localStorage.setItem("cart",JSON.stringify(cart));
+
+  renderCart();
+
+}
+
+/* LOAD CART ON PAGE LOAD */
+
+renderCart();
+
+/* CLOSE CART WHEN CLICK OUTSIDE */
+
+cartOverlay.addEventListener("click", closeCart);
