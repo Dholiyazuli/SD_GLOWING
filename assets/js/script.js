@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 /**
  * add event on element
  */
@@ -15,7 +13,6 @@ const addEventOnElem = function (elem, type, callback) {
     elem.addEventListener(type, callback);
   }
 }
-
 
 
 /**
@@ -40,7 +37,6 @@ const closeNavbar = function () {
 }
 
 addEventOnElem(navbarLinks, "click", closeNavbar);
-
 
 
 /**
@@ -77,7 +73,6 @@ const headerSticky = function () {
 addEventOnElem(window, "scroll", headerSticky);
 
 
-
 /**
  * scroll reveal effect
  */
@@ -93,16 +88,20 @@ const scrollReveal = function () {
 }
 
 scrollReveal();
-
 addEventOnElem(window, "scroll", scrollReveal);
 
 
+/**
+ * email validation
+ */
 
-const form = document.querySelector("form");
+const form = document.querySelector("#subscribeForm");
+
+if(form){
 
 form.addEventListener("submit", function(e){
 
-  const email = form.email.value.trim();
+  const email = form.email_address.value.trim();
   const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if(!pattern.test(email)){
@@ -112,10 +111,14 @@ form.addEventListener("submit", function(e){
 
 });
 
+}
+
 
 /*-----------------------------------*\
-  # CART SYSTEM
+  CART SYSTEM
 \*-----------------------------------*/
+
+/* CART SYSTEM */
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -126,88 +129,84 @@ const cartTotal = document.getElementById("cart-total");
 const cartCount = document.getElementById("cart-count");
 const cartPrice = document.getElementById("cart-price");
 
+
 /* OPEN CART */
-function openCart(){
+window.openCart = function () {
   cartSidebar.classList.add("active");
-  cartOverlay.style.display="block";
+  cartOverlay.classList.add("active");
   renderCart();
 }
 
+
 /* CLOSE CART */
-function closeCart(){
+window.closeCart = function () {
   cartSidebar.classList.remove("active");
-  cartOverlay.style.display="none";
+  cartOverlay.classList.remove("active");
 }
 
-/* ADD PRODUCT */
-function addToCart(name,price,image){
 
-  const product={
-    name:name,
-    price:price,
-    image:image,
-    qty:1
+/* ADD TO CART */
+window.addToCart = function (name, price, image) {
+
+  const product = {
+    name: name,
+    price: Number(price),
+    image: image
   };
 
   cart.push(product);
 
-  localStorage.setItem("cart",JSON.stringify(cart));
+  localStorage.setItem("cart", JSON.stringify(cart));
 
   renderCart();
   openCart();
 }
 
+
 /* DISPLAY CART */
-function renderCart(){
+function renderCart() {
 
-  cartItems.innerHTML="";
-  let total=0;
+  cartItems.innerHTML = "";
 
-  cart.forEach((item,index)=>{
+  let total = 0;
 
-    total+=item.price;
+  if (cart.length === 0) {
+    cartItems.innerHTML = "<p>Your cart is empty</p>";
+  }
 
-    cartItems.innerHTML+=`
+  cart.forEach((item, index) => {
 
+    total += item.price;
+
+    cartItems.innerHTML += `
       <div class="cart-item">
-
-        <img src="${item.image}">
-
+        <img src="${item.image}" alt="${item.name}">
         <div>
           <p>${item.name}</p>
           <p>₹${item.price}</p>
         </div>
-
-        <button onclick="removeItem(${index})">❌</button>
-
+        <button class="remove-btn" onclick="removeItem(${index})">❌</button>
       </div>
-
     `;
-
   });
 
-  cartTotal.innerText=total;
-  cartCount.innerText=cart.length;
-  cartPrice.innerText="₹"+total+".00";
-
+  cartTotal.innerText = total;
+  cartCount.innerText = cart.length;
+  cartPrice.innerText = "₹" + total + ".00";
 }
+
 
 /* REMOVE ITEM */
-
-function removeItem(index){
-
-  cart.splice(index,1);
-
-  localStorage.setItem("cart",JSON.stringify(cart));
-
+window.removeItem = function (index) {
+  cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
-
 }
 
-/* LOAD CART ON PAGE LOAD */
-
-renderCart();
 
 /* CLOSE CART WHEN CLICK OUTSIDE */
-
 cartOverlay.addEventListener("click", closeCart);
+
+
+/* LOAD CART ON PAGE LOAD */
+renderCart();
