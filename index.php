@@ -11,7 +11,6 @@
     - favicon
   -->
   <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
-
   <!-- 
     - custom css link
   -->
