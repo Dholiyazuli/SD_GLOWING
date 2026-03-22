@@ -12,10 +12,8 @@
   -->
   <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
 
-  <!-- 
-    - custom css link
-  -->
   <link rel="stylesheet" href="./assets/css/style01.css">
+  <script src="./assets/js/script.js"></script>
 
   <!-- 
     - google font link
@@ -444,7 +442,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn"onclick="addToCart('Facial cleanser',800,'./assets/images/product-1.jpg')"aria-label="add to cart">
+                    <button onclick="addToCart('Facial Cleanser', 800)">Add to Cart</button>
                       <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
                     </button>
 
@@ -1450,54 +1448,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
 
-
-  <!-- 
-    - custom js link
-  -->
-  <script src="./assets/js/script.js" defer></script>
-
   <!-- 
     - ionicon link
   -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-
-<script>
-let cart = [];
-
-function openCart(){
-  document.getElementById("cart-sidebar").classList.add("active");
-  document.getElementById("cart-overlay").classList.add("active");
-}
-
-function closeCart(){
-  document.getElementById("cart-sidebar").classList.remove("active");
-  document.getElementById("cart-overlay").classList.remove("active");
-}
-
-function addToCart(name, price){
-  cart.push({name, price});
-  updateCart();
-}
-
-function updateCart(){
-  let itemsDiv = document.getElementById("cart-items");
-  let total = 0;
-  itemsDiv.innerHTML = "";
-
-  cart.forEach(item=>{
-    total += item.price;
-    itemsDiv.innerHTML += `<div class="cart-item">
-      <span>${item.name}</span>
-      <span>₹${item.price}</span>
-    </div>`;
-  });
-
-  document.getElementById("cart-total").innerText = total;
-  document.getElementById("cart-count").innerText = cart.length;
-}
-</script>
 
 </body>
 

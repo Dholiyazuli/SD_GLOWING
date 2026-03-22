@@ -1,5 +1,29 @@
 'use strict';
 
+const messages = [
+  "Free Shipping On All Orders ₹10000",
+  "🔥 Flat 20% OFF on Skincare Products",
+  "✨ Buy 1 Get 1 Free Today Only",
+  "🚚 Fast Delivery Available",
+  "💚 100% Natural & Safe Products"
+];
+
+let index = 0;
+const alertText = document.getElementById("alertText");
+
+setInterval(() => {
+  index = (index + 1) % messages.length;
+  alertText.style.opacity = 0;
+
+  setTimeout(() => {
+    alertText.innerText = messages[index];
+    alertText.style.opacity = 1;
+  }, 300);
+
+}, 3000); // change every 3 seconds
+
+
+
 /**
  * add event on element
  */
@@ -14,6 +38,14 @@ const addEventOnElem = function (elem, type, callback) {
   }
 }
 
+document.querySelectorAll(".skin-card").forEach(card => {
+    card.addEventListener("click", () => {
+        let type = card.getAttribute("data-type");
+
+        // redirect to collection page
+        window.location.href = "collection.php?skin=" + type;
+    });
+});
 
 /**
  * navbar toggle
@@ -112,101 +144,11 @@ form.addEventListener("submit", function(e){
 });
 
 }
-
-
-/*-----------------------------------*\
-  CART SYSTEM
-\*-----------------------------------*/
-
-/* CART SYSTEM */
-
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-const cartSidebar = document.getElementById("cart-sidebar");
-const cartOverlay = document.getElementById("cart-overlay");
-const cartItems = document.getElementById("cart-items");
-const cartTotal = document.getElementById("cart-total");
-const cartCount = document.getElementById("cart-count");
-const cartPrice = document.getElementById("cart-price");
-
-
-/* OPEN CART */
-window.openCart = function () {
-  cartSidebar.classList.add("active");
-  cartOverlay.classList.add("active");
-  renderCart();
+function openChat() {
+  document.getElementById("chatPopup").style.display = "block";
 }
 
-
-/* CLOSE CART */
-window.closeCart = function () {
-  cartSidebar.classList.remove("active");
-  cartOverlay.classList.remove("active");
+function closeChat() {
+  document.getElementById("chatPopup").style.display = "none";
 }
 
-
-/* ADD TO CART */
-window.addToCart = function (name, price, image) {
-
-  const product = {
-    name: name,
-    price: Number(price),
-    image: image
-  };
-
-  cart.push(product);
-
-  localStorage.setItem("cart", JSON.stringify(cart));
-
-  renderCart();
-  openCart();
-}
-
-
-/* DISPLAY CART */
-function renderCart() {
-
-  cartItems.innerHTML = "";
-
-  let total = 0;
-
-  if (cart.length === 0) {
-    cartItems.innerHTML = "<p>Your cart is empty</p>";
-  }
-
-  cart.forEach((item, index) => {
-
-    total += item.price;
-
-    cartItems.innerHTML += `
-      <div class="cart-item">
-        <img src="${item.image}" alt="${item.name}">
-        <div>
-          <p>${item.name}</p>
-          <p>₹${item.price}</p>
-        </div>
-        <button class="remove-btn" onclick="removeItem(${index})">❌</button>
-      </div>
-    `;
-  });
-
-  cartTotal.innerText = total;
-  cartCount.innerText = cart.length;
-  cartPrice.innerText = "₹" + total + ".00";
-}
-
-
-/* REMOVE ITEM */
-window.removeItem = function (index) {
-  cart.splice(index, 1);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  renderCart();
-}
-
-
-/* CLOSE CART WHEN CLICK OUTSIDE */
-cartOverlay.addEventListener("click", closeCart);
-
-
-/* LOAD CART ON PAGE LOAD */
-renderCart();

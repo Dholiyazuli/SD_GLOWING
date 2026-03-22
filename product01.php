@@ -1,5 +1,7 @@
 <?php
-// product.php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -236,23 +238,37 @@
 
         <p class="rating-text">50,000+ reviews</p>
 
-        <h1 class="price">$80</h1>
+        <h1 class="price">₹1000</h1>
 
         <p class="description">
             Plum Green Tea Renewed Clarity Night Gel Mini | Hydrates Skin & Fights Acne | Lightweight, Quick-Absorbing, Non-Sticky Gel Texture | Oily, Acne-Prone Skin | 100% Vegan(15ml)
         </p>
 
-        <h3>Select Size</h3>
+        <?php
+        $product_name = "Plum Green Tea Renewed Clarity Night Gel Mini";
+        $in_cart = false;
 
-        <div class="sizes">
-            <button>S</button>
-            <button>M</button>
-            <button>L</button>
-            <button>XL</button>
-            <button>XXL</button>
-        </div>
+        if (isset($_SESSION['cart'])) {
+            foreach ($_SESSION['cart'] as $item) {
+                if ($item['name'] == $product_name) {
+                    $in_cart = true;
+                    break;
+                }
+            }
+        }
+        ?>
 
-        <button class="add-cart">ADD TO CART</button>
+        <?php if ($in_cart): ?>
+            <button class="add-cart"
+                onclick="window.location.href='index.php?add=1&name=<?php echo urlencode($product_name); ?>&price=1000&image=./assets/images/product-1.jpg&redirect=product'">
+                REMOVE FROM CART
+            </button>
+        <?php else: ?>
+            <button class="add-cart"
+                onclick="window.location.href='index.php?add=1&name=<?php echo urlencode($product_name); ?>&price=1000&image=./assets/images/product-1.jpg&redirect=product'">
+                ADD TO CART
+            </button>
+        <?php endif; ?>
 
         <div class="policy">
             <p>✔ 100% Original Product</p>

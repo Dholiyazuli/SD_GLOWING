@@ -1,135 +1,190 @@
-<?php
-$reply = "";
-
-if(isset($_POST["message"])){
-
-    $user_message = $_POST["message"];
-
-    $apiKey = "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";
-
-    $system_prompt = "
-You are an AI skincare assistant for a beauty website.
-You must ONLY talk about skincare, skin types, and skincare products.
-
-You must only recommend these products:
-- Green Tea Oil-Control Facewash
-- Deep Hydrating Cream Cleanser
-- Vitamin-C Glow Boost Serum
-- Acne Clearing Treatment Gel
-
-If the user asks anything not related to skincare, reply:
-'I can only help with skincare and product recommendations.'
-
-You can reply in English or Hinglish (Hindi in English letters).
-";
-
-    $data = [
-        "model" => "gpt-4o-mini",
-        "messages" => [
-            ["role"=>"system","content"=>$system_prompt],
-            ["role"=>"user","content"=>$user_message]
-        ]
-    ];
-
-    $ch = curl_init("https://api.openai.com/v1/chat/completions");
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "Content-Type: application/json",
-        "Authorization: Bearer ".$apiKey
-    ]);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-
-    $result = curl_exec($ch);
-    curl_close($ch);
-
-    $response = json_decode($result, true);
-    $reply = $response["choices"][0]["message"]["content"] ?? "AI not responding";
-}
-?>
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>AI Skincare Assistant</title>
-<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+<!-- ================= ADVANCED CHATBOT ================= -->
 <style>
-body{
-    font-family:'Urbanist',sans-serif;
-    background:linear-gradient(135deg,#e9f9ef,#f4fff8);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
+/* Floating Button */
+.chat-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #2e7d32;
+  color: #fff;
+  border-radius: 50%;
+  padding: 16px;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  z-index: 999;
 }
 
-.chatbox{
-    width:450px;
-    background:white;
-    padding:30px;
-    border-radius:25px;
-    box-shadow:0 30px 60px rgba(13,157,74,0.18);
+/* Chat Container */
+.chat-container {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 320px;
+  height: 420px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease;
 }
 
-h2{
-    text-align:center;
-    color:#0d9d4a;
+/* Header */
+.chat-header {
+  background: #2e7d32;
+  color: white;
+  padding: 12px;
+  font-weight: bold;
+  text-align: center;
 }
 
-textarea{
-    width:100%;
-    height:80px;
-    border-radius:12px;
-    border:1px solid #cdeedd;
-    padding:12px;
-    resize:none;
+/* Chat Body */
+.chat-body {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background: #f9f9f9;
 }
 
-button{
-    width:100%;
-    margin-top:10px;
-    padding:12px;
-    border-radius:40px;
-    border:2px solid #0b6b3a;
-    background:white;
-    color:#0b6b3a;
-    font-weight:600;
-    cursor:pointer;
+/* Messages */
+.msg {
+  margin: 6px 0;
+  max-width: 80%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 13px;
 }
 
-button:hover{
-    background:#0b6b3a;
-    color:white;
+.bot {
+  background: #e8f5e9;
+  align-self: flex-start;
 }
 
-.reply{
-    margin-top:20px;
-    background:#f5fff8;
-    padding:15px;
-    border-radius:15px;
-    border:1px solid #cdeedd;
-    color:#245c3f;
+.user {
+  background: #2e7d32;
+  color: #fff;
+  align-self: flex-end;
+}
+
+/* Buttons */
+.option-btn {
+  display: block;
+  width: 100%;
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  padding: 6px;
+  margin: 4px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* Typing */
+.typing {
+  font-size: 12px;
+  color: gray;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
-</head>
 
-<body>
+<!-- Button -->
+<div class="chat-toggle" onclick="toggleChat()">💬</div>
 
-<div class="chatbox">
-<h2>🌿 AI Skincare Assistant</h2>
-
-<form method="POST">
-<textarea name="message" placeholder="Ask about your skin, acne, dryness, products..."></textarea>
-<button type="submit">Ask AI</button>
-</form>
-
-<?php if($reply!=""){ ?>
-<div class="reply">
-<b>AI:</b><br><?php echo nl2br($reply); ?>
+<!-- Chat -->
+<div class="chat-container" id="chatBox">
+  <div class="chat-header">Glowing Assistant</div>
+  <div class="chat-body" id="chatBody"></div>
 </div>
-<?php } ?>
 
-</div>
-</body>
-</html>
+<script>
+const chatBody = document.getElementById("chatBody");
+
+function toggleChat() {
+  const box = document.getElementById("chatBox");
+  box.style.display = box.style.display === "flex" ? "none" : "flex";
+
+  if (chatBody.innerHTML === "") startChat();
+}
+
+// Add message
+function addMsg(text, type="bot") {
+  const div = document.createElement("div");
+  div.className = "msg " + type;
+  div.innerHTML = text;
+  chatBody.appendChild(div);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// Typing effect
+function botReply(text) {
+  const typing = document.createElement("div");
+  typing.className = "typing";
+  typing.innerText = "Typing...";
+  chatBody.appendChild(typing);
+  chatBody.scrollTop = chatBody.scrollHeight;
+
+  setTimeout(() => {
+    typing.remove();
+    addMsg(text, "bot");
+  }, 800);
+}
+
+// Buttons
+function addOptions(options) {
+  options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "option-btn";
+    btn.innerText = opt.label;
+    btn.onclick = () => {
+      addMsg(opt.label, "user");
+      opt.action();
+    };
+    chatBody.appendChild(btn);
+  });
+}
+
+// Start
+function startChat() {
+  botReply("Hi 👋 Welcome to Glowing!");
+  setTimeout(() => {
+    botReply("How can I help you?");
+    addOptions([
+      {label:"🛍️ Shop", action: showProducts},
+      {label:"🔥 Offers", action: showOffers},
+      {label:"📦 Track Order", action: trackOrder},
+      {label:"💬 Contact", action: contact}
+    ]);
+  }, 1000);
+}
+
+// Flows
+function showProducts() {
+  botReply("Choose category:");
+  addOptions([
+    {label:"Face Wash", action: ()=>botReply("Explore Face Wash 🧴")},
+    {label:"Serum", action: ()=>botReply("Best serums available ✨")},
+    {label:"Skincare", action: ()=>botReply("Browse skincare 💚")}
+  ]);
+}
+
+function showOffers() {
+  botReply("🔥 20% OFF<br>✨ Buy 1 Get 1<br>🚚 Free Shipping above ₹1000");
+}
+
+function trackOrder() {
+  botReply("Please contact support with your Order ID 📦");
+}
+
+function contact() {
+  botReply("Click below to chat on WhatsApp 👇");
+  chatBody.innerHTML += `<a href="https://wa.me/6354119053" target="_blank" class="option-btn">Open WhatsApp</a>`;
+}
+</script>

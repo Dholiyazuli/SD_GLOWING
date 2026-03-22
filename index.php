@@ -1,4 +1,61 @@
-<?php session_start(); ?>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
+<?php
+if (isset($_GET['add'])) {
+
+    $product = [
+        "name" => $_GET['name'],
+        "price" => (int) $_GET['price'],
+        "image" => $_GET['image'],
+        "qty" => 1
+    ];
+
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
+
+    $foundIndex = -1;
+
+    foreach ($_SESSION['cart'] as $index => $item) {
+        if ($item['image'] == $product['image']) {
+            $foundIndex = $index;
+            break;
+        }
+    }
+
+    // 🔥 TOGGLE LOGIC
+    if ($foundIndex >= 0) {
+        // REMOVE
+        unset($_SESSION['cart'][$foundIndex]);
+        $_SESSION['cart'] = array_values($_SESSION['cart']);
+    } else {
+        // ADD
+        $_SESSION['cart'][] = $product;
+    }
+
+    if (isset($_GET['redirect']) && $_GET['redirect'] == 'product') {
+    header("Location: product01.php");
+} else {
+    header("Location: index.php");
+}
+    exit();
+}
+?>
+<?php
+$totalPrice = 0;
+$totalCount = 0;
+
+if (isset($_SESSION['cart'])) {
+    foreach ($_SESSION['cart'] as $item) {
+        $totalPrice += $item['price'] * $item['qty'];
+        $totalCount += $item['qty'];
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +72,7 @@
   <!-- 
     - custom css link
   -->
+  <script src="./assets/js/script.js" defer></script>
   <link rel="stylesheet" href="./assets/css/style01.css">
 
   <!-- 
@@ -44,7 +102,9 @@
 
     <div class="alert">
       <div class="container">
-        <p class="alert-text">Free Shipping On All U.S. Orders ₹10000</p>
+        <p class="alert-text" id="alertText">
+          Free Shipping On All Orders ₹10000
+        </p>
       </div>
     </div>
 
@@ -70,13 +130,6 @@
         </a>
 
         <div class="header-actions">
-
-        <?php
-// make sure session is started at very top of page
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-?>
 
 <?php if(isset($_SESSION['user_id'])) { ?>
 
@@ -105,29 +158,49 @@ if (session_status() === PHP_SESSION_NONE) {
             <span class="btn-badge">0</span>
           </button>
 
-          <button class="header-action-btn" aria-label="cart item" onclick="openCart()">
-            <data class="btn-text" id="cart-price" value="0">₹0.00</data>
+          <a href="cart.php" class="header-action-btn">
+            <ion-icon name="bag-handle-outline"></ion-icon>
 
-            <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+            <span class="btn-badge">
+              <?php echo $totalCount; ?>
+            </span>
 
-            <span class="btn-badge" id="cart-count">0</span>
+          </a>
+          <button class="header-action-btn" onclick="openChat()" aria-label="chat">
+            <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
           </button>
+          <div id="chatPopup" style="
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 350px;
+                height: 450px;
+                display: none;
+                z-index: 9999;
+              ">
+            <button onclick="closeChat()" style="
+                position:absolute;
+                top:-10px;
+                right:-10px;
+                background:red;
+                color:white;
+                border:none;
+                border-radius:50%;
+                width:25px;
+                height:25px;
+                cursor:pointer;
+              ">×</button>
+            <iframe src="chatbot.php" style="
+                width:100%;
+                height:100%;
+                border:none;
+                border-radius:10px;
+                box-shadow:0 10px 30px rgba(0,0,0,0.3);
+                background:white;
+              "></iframe>
 
-        </div>
-          <div id="cart-overlay"></div>
-          <div id="cart-sidebar">
 
-          <div class="cart-header">
-          <h2>Your Cart</h2>
-          <button onclick="closeCart()">✖</button>
-          </div>
-
-          <div id="cart-items"></div>
-
-          <div class="cart-footer">
-          <h3>Total: ₹<span id="cart-total">0</span></h3>
-          <button class="checkout-btn">Checkout</button>
-        </div>
+</div>
 
 </div>        
 
@@ -370,6 +443,47 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
       </section>
 
+      <section class="skin-section">
+
+          <!-- Header Row -->
+          <div class="section-header">
+              <h2>Shop by Skin Type</h2>
+
+              <a href="skintype.php" class="know-btn">
+                  Know Your Skin Type →
+              </a>
+          </div>
+
+          <p class="subtitle">
+              Choose products based on your skin type for best results
+          </p>
+
+          <div class="skin-container">
+
+              <div class="skin-card" data-type="dry">
+                  <img src="assets/images/dry.jpg" alt="Dry Skin">
+                  <h3>Dry Skin</h3>
+              </div>
+
+              <div class="skin-card" data-type="sensitive">
+                  <img src="assets/images/sensitive.jpeg" alt="Sensitive Skin">
+                  <h3>Sensitive Skin</h3>
+              </div>
+
+              <div class="skin-card" data-type="combination">
+                  <img src="assets/images/combination.jpg" alt="Combination Skin">
+                  <h3>Combination Skin</h3>
+              </div>
+
+              <div class="skin-card" data-type="oily">
+                  <img src="assets/images/oily.jpg" alt="Oily Skin">
+                  <h3>Oily Skin</h3>
+              </div>
+
+          </div>
+
+      </section>
+
 
 
 
@@ -394,7 +508,7 @@ if (session_status() === PHP_SESSION_NONE) {
           <ul class="has-scrollbar">
 
             <li class="scrollbar-item">
-              <div class="shop-card">
+              <div class="shop-card" id="facial cleanser">
 
                 <div class="card-banner img-holder" style="--width: 540; --height: 720;">
                   <img src="./assets/images/product-1.jpg" width="540" height="720" loading="lazy"
@@ -404,9 +518,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn"onclick="addToCart('Facial cleanser',800,'./assets/images/product-1.jpg')"aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                  <a href="?add=1&name=<?php echo urlencode('Facial cleanser'); ?>&price=800&image=./assets/images/product-1.jpg">
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline"></ion-icon>
                     </button>
+                  </a>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
@@ -451,7 +567,7 @@ if (session_status() === PHP_SESSION_NONE) {
             </li>
 
             <li class="scrollbar-item">
-              <div class="shop-card">
+              <div class="shop-card" id ="bio-shroom rejuvenating serum">
 
                 <div class="card-banner img-holder" style="--width: 540; --height: 720;">
                   <img src="./assets/images/product-02.jpg" width="540" height="720" loading="lazy"
@@ -459,9 +575,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn"onclick="addToCart('Bio-shroom Rejuvenating Serum',1000,'./assets/images/product-02.jpg')"aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                  <a href="?add=1&name=<?php echo urlencode('Bio-shroom Rejuvenating Serum'); ?>&price=1000&image=./assets/images/product-02.jpg">
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline"></ion-icon>
                     </button>
+                  </a>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
@@ -501,8 +619,8 @@ if (session_status() === PHP_SESSION_NONE) {
               </div>
             </li>
 
-            <li class="scrollbar-item">
-              <div class="shop-card">
+            <li class="scrollbar-item" >
+              <div class="shop-card" id ="coffee bean caffeine eye cream">
 
                 <div class="card-banner img-holder" style="--width: 540; --height: 720;">
                   <img src="./assets/images/product-03.jpg" width="540" height="720" loading="lazy"
@@ -510,9 +628,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn"onclick="addToCart('Coffee Bean Caffeine Eye Cream',500,'./assets/images/product-03.jpg')"aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                  <a href="?add=1&name=<?php echo urlencode('Coffee Bean Caffeine Eye Cream'); ?>&price=500&image=./assets/images/product-03.jpg">
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline"></ion-icon>
                     </button>
+                  </a>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
@@ -552,7 +672,7 @@ if (session_status() === PHP_SESSION_NONE) {
             </li>
 
             <li class="scrollbar-item">
-              <div class="shop-card">
+              <div class="shop-card" id="facial cleanser" >
 
                 <div class="card-banner img-holder" style="--width: 540; --height: 720;">
                   <img src="./assets/images/product-04.jpg" width="540" height="720" loading="lazy"
@@ -560,9 +680,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn"onclick="addToCart('Facial cleanser',800,'./assets/images/product-04.jpg')"aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                  <a href="?add=1&name=<?php echo urlencode('Facial cleanser'); ?>&price=199&image=./assets/images/product-04.jpg">
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline"></ion-icon>
                     </button>
+                  </a>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
@@ -602,7 +724,7 @@ if (session_status() === PHP_SESSION_NONE) {
             </li>
 
             <li class="scrollbar-item">
-              <div class="shop-card">
+              <div class="shop-card" id="coffee bean caffeine eye cream">
 
                 <div class="card-banner img-holder" style="--width: 540; --height: 720;">
                   <img src="./assets/images/product-05.jpg" width="540" height="720" loading="lazy"
@@ -612,9 +734,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn"onclick="addToCart('Coffee Bean Caffeine Eye Cream',500,'./assets/images/product-05.jpg')"aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                  <a href="?add=1&name=<?php echo urlencode('Coffee Bean Caffeine Eye Cream'); ?>&price=2000&image=./assets/images/product-05.jpg">
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline"></ion-icon>
                     </button>
+                  </a>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
@@ -656,7 +780,7 @@ if (session_status() === PHP_SESSION_NONE) {
             </li>
 
             <li class="scrollbar-item">
-              <div class="shop-card">
+              <div class="shop-card" id ="facial cleanser" >
 
                 <div class="card-banner img-holder" style="--width: 540; --height: 720;">
                   <img src="./assets/images/product-06.jpg" width="540" height="720" loading="lazy"
@@ -664,9 +788,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn"onclick="addToCart('Coffee Bean Caffeine Eye Cream',500,'./assets/images/product-06.jpg')"aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                  <a href="?add=1&name=<?php echo urlencode('Facial cleanser'); ?>&price=100&image=./assets/images/product-06.jpg">
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline"></ion-icon>
                     </button>
+                  </a>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
@@ -706,7 +832,7 @@ if (session_status() === PHP_SESSION_NONE) {
             </li>
 
             <li class="scrollbar-item">
-              <div class="shop-card">
+              <div class="shop-card" id="facial cleanser" >
 
                 <div class="card-banner img-holder" style="--width: 540; --height: 720;">
                   <img src="./assets/images/product-07.jpg" width="540" height="720" loading="lazy"
@@ -716,9 +842,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn"onclick="addToCart('Coffee Bean Caffeine Eye Cream',500,'./assets/images/product-07.jpg')"aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                  <a href="?add=1&name=<?php echo urlencode('Facial cleanser'); ?>&price=1500&image=./assets/images/product-07.jpg">
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline"></ion-icon>
                     </button>
+                  </a>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
@@ -760,7 +888,7 @@ if (session_status() === PHP_SESSION_NONE) {
             </li>
 
             <li class="scrollbar-item">
-              <div class="shop-card">
+              <div class="shop-card" id ="Bio-shroom rejuvenating serum" >
 
                 <div class="card-banner img-holder" style="--width: 540; --height: 720;">
                   <img src="./assets/images/product-08.jpg" width="540" height="720" loading="lazy"
@@ -768,9 +896,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn"onclick="addToCart('Bio-shroom Rejuvenating Serum',500,'./assets/images/product-08.jpg')"aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                  <a href="?add=1&name=<?php echo urlencode('Bio-shroom Rejuvenating Serum'); ?>&price=500&image=./assets/images/product-08.jpg">
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline"></ion-icon>
                     </button>
+                  </a>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
@@ -810,7 +940,7 @@ if (session_status() === PHP_SESSION_NONE) {
             </li>
 
             <li class="scrollbar-item">
-              <div class="shop-card">
+              <div class="shop-card" id="coffee bean caffeine eye cream" >
 
                 <div class="card-banner img-holder" style="--width: 540; --height: 720;">
                   <img src="./assets/images/product-09.jpg" width="540" height="720" loading="lazy"
@@ -818,9 +948,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn"onclick="addToCart('Coffee Bean Caffeine Eye Cream',500,'./assets/images/product-09.jpg')"aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                  <a href="?add=1&name=<?php echo urlencode('Coffee Bean Caffeine Eye Cream'); ?>&price=499.99&image=./assets/images/product-09.jpg">
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline"></ion-icon>
                     </button>
+                  </a>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
@@ -860,7 +992,7 @@ if (session_status() === PHP_SESSION_NONE) {
             </li>
 
             <li class="scrollbar-item">
-              <div class="shop-card">
+              <div class="shop-card" id="facial cleanser">
 
                 <div class="card-banner img-holder" style="--width: 540; --height: 720;">
                   <img src="./assets/images/product-10.jpg" width="540" height="720" loading="lazy"
@@ -868,9 +1000,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn"onclick="addToCart('Facial cleanser',800,'./assets/images/product-10.jpg')"aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                  <a href="?add=1&name=<?php echo urlencode('Facial cleanser'); ?>&price=1000.00&image=./assets/images/product-10.jpg">
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline"></ion-icon>
                     </button>
+                  </a>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
@@ -910,7 +1044,7 @@ if (session_status() === PHP_SESSION_NONE) {
             </li>
 
             <li class="scrollbar-item">
-              <div class="shop-card">
+              <div class="shop-card" id ="coffee bean caffeine eye cream" >
 
                 <div class="card-banner img-holder" style="--width: 540; --height: 720;">
                   <img src="./assets/images/product-11.jpg" width="540" height="720" loading="lazy"
@@ -920,9 +1054,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
                   <div class="card-actions">
 
-                    <button class="action-btn"onclick="addToCart('Coffee Bean Caffeine Eye Cream',500,'./assets/images/product-11.jpg')"aria-label="add to cart">
-                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                  <a href="?add=1&name=<?php echo urlencode('Coffee Bean Caffeine Eye Cream'); ?>&price=1000&image=./assets/images/product-11.jpg">
+                    <button class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline"></ion-icon>
                     </button>
+                  </a>
 
                     <button class="action-btn" aria-label="add to whishlist">
                       <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
@@ -1121,39 +1257,6 @@ if (session_status() === PHP_SESSION_NONE) {
               <span class="time" aria-label="seconds">00</span>
 
             </div>
-            <script>
-document.addEventListener('DOMContentLoaded', function(){
-  // Set offer end date & time
-  const offerEndDate = new Date("2026-01-31 23:12:59").getTime();
-
-  const countdownItems = document.querySelectorAll(".countdown .time");
-
-  const timer = setInterval(() => {
-    const now = new Date().getTime();
-    const distance = offerEndDate - now;
-
-    if (distance <= 0) {
-      clearInterval(timer);
-      countdownItems[0].innerText = "00";
-      countdownItems[1].innerText = "00";
-      countdownItems[2].innerText = "00";
-      countdownItems[3].innerText = "00";
-      return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    countdownItems[0].innerText = String(days).padStart(2, "0");
-    countdownItems[1].innerText = String(hours).padStart(2, "0");
-    countdownItems[2].innerText = String(minutes).padStart(2, "0");
-    countdownItems[3].innerText = String(seconds).padStart(2, "0");
-
-  }, 1000);
-});
-</script>
 
             
 
@@ -1413,19 +1516,13 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 
-  <!-- 
-    - custom js link
-  -->
-  <script src="./assets/js/script.js" defer>});
-</script>
+
 
   <!-- 
     - ionicon link
   -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js">});
-</script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js">});
-</script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </body>
 

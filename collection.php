@@ -4,32 +4,32 @@ $selectedType = isset($_GET['skin']) ? $_GET['skin'] : "all";
 $products = [
 
 /* DRY */
-["name"=>"Hydra Cream 1","price"=>1200,"old"=>1500,"skin"=>"dry","img"=>"images/dry1.jpg"],
-["name"=>"Hydra Cream 2","price"=>1200,"old"=>1500,"skin"=>"dry","img"=>"images/dry2.jpg"],
-["name"=>"Hydra Cream 3","price"=>1200,"old"=>1500,"skin"=>"dry","img"=>"images/dry3.jpg"],
-["name"=>"Hydra Cream 4","price"=>1200,"old"=>1500,"skin"=>"dry","img"=>"images/dry4.jpg"],
-["name"=>"Hydra Cream 5","price"=>1200,"old"=>1500,"skin"=>"dry","img"=>"images/dry5.jpg"],
+["name"=>"Deep Moisturizing Cream with Hyaluronic Acid ","price"=>999,"old"=>1499,"skin"=>"dry","img"=>"assets/images/product/dry skin/product1.jpg"],
+["name"=>"Daily Repair Cream for Dry & Flaky Skin ","price"=>1099,"old"=>1599,"skin"=>"dry","img"=>"assets/images/product/dry skin/product2.jpg"],
+["name"=>"Boost Intense Hydration Cream with Vitamin E ","price"=>1199,"old"=>1699,"skin"=>"dry","img"=>"assets/images/product/dry skin/product3.jpg"],
+["name"=>"Ultra Hydrating Night Cream for Dry Skin with Aloe Vera","price"=>1299,"old"=>1799,"skin"=>"dry","img"=>"assets/images/product/dry skin/product4.jpg"],
+["name"=>"Lock Cream for Extra Dry Skin (Dermat Tested)","price"=>1399,"old"=>1899,"skin"=>"dry","img"=>"assets/images/product/dry skin/product5.jpg"],
 
-/* OILY */
-["name"=>"Oil Control Gel 1","price"=>900,"old"=>1100,"skin"=>"oily","img"=>"images/oily1.jpg"],
-["name"=>"Oil Control Gel 2","price"=>900,"old"=>1100,"skin"=>"oily","img"=>"images/oily2.jpg"],
-["name"=>"Oil Control Gel 3","price"=>900,"old"=>1100,"skin"=>"oily","img"=>"images/oily3.jpg"],
-["name"=>"Oil Control Gel 4","price"=>900,"old"=>1100,"skin"=>"oily","img"=>"images/oily4.jpg"],
-["name"=>"Oil Control Gel 5","price"=>900,"old"=>1100,"skin"=>"oily","img"=>"images/oily5.jpg"],
+/* OIL */
+["name"=>"Oil Control Face Gel with Niacinamide & Tea Tree for Acne-Free Skin ","price"=>899,"old"=>1199,"skin"=>"oil","img"=>"assets/images/product/oil skin/product1.jpg"],
+["name"=>"Matte Finish Oil Control Gel with Salicylic Acid for Pimples","price"=>949,"old"=>1299,"skin"=>"oil","img"=>"assets/images/product/oil skin/product2.jpg"],
+["name"=>"Lightweight Oil-Free Gel Moisturizer with Green Tea Extract ","price"=>999,"old"=>1399,"skin"=>"oil","img"=>"assets/images/product/oil skin/product3.jpg"],
+["name"=>"Anti-Acne Oil Control Gel with Vitamin B3 for Clear Skin ","price"=>879,"old"=>1199,"skin"=>"oil","img"=>"assets/images/product/oil skin/product4.jpg"],
+["name"=>"Pomegranate Oil Control Gel Cream for Youthful Glow ","price"=>929,"old"=>1299,"skin"=>"oil","img"=>"assets/images/product/oil skin/product5.jpg"],
 
 /* COMBINATION */
-["name"=>"Balance Serum 1","price"=>1500,"old"=>1800,"skin"=>"combination","img"=>"images/comb1.jpg"],
-["name"=>"Balance Serum 2","price"=>1500,"old"=>1800,"skin"=>"combination","img"=>"images/comb2.jpg"],
-["name"=>"Balance Serum 3","price"=>1500,"old"=>1800,"skin"=>"combination","img"=>"images/comb3.jpg"],
-["name"=>"Balance Serum 4","price"=>1500,"old"=>1800,"skin"=>"combination","img"=>"images/comb4.jpg"],
-["name"=>"Balance Serum 5","price"=>1500,"old"=>1800,"skin"=>"combination","img"=>"images/comb5.jpg"],
+["name"=>"Balance Skin Serum with Niacinamide & Hyaluronic Acid for Oil-Dry Control","price"=>1499,"old"=>1899,"skin"=>"combination","img"=>"assets/images/product/combination skin/product1.jpg"],
+["name"=>"Rose Extract Balancing Face Serum for Hydration & Oil Control ","price"=>1399,"old"=>1799,"skin"=>"combination","img"=>"assets/images/product/combination skin/product2.jpg"],
+["name"=>"Gold Infused Glow Serum for Even Tone & Radiant Skin ","price"=>1599,"old"=>1999,"skin"=>"combination","img"=>"assets/images/product/combination skin/product3.jpg"],
+["name"=>"Collagen Boost Face Serum for Firm & Balanced Skin ","price"=>1499,"old"=>1899,"skin"=>"combination","img"=>"assets/images/product/combination skin/product4.jpg"],
+["name"=>"Coffee Detox Balancing Serum for Clear & Smooth Skin ","price"=>1299,"old"=>1699,"skin"=>"combination","img"=>"assets/images/product/combination skin/product5.jpg"],
 
 /* SENSITIVE */
-["name"=>"Calm Lotion 1","price"=>1000,"old"=>1300,"skin"=>"sensitive","img"=>"images/sen1.jpg"],
-["name"=>"Calm Lotion 2","price"=>1000,"old"=>1300,"skin"=>"sensitive","img"=>"images/sen2.jpg"],
-["name"=>"Calm Lotion 3","price"=>1000,"old"=>1300,"skin"=>"sensitive","img"=>"images/sen3.jpg"],
-["name"=>"Calm Lotion 4","price"=>1000,"old"=>1300,"skin"=>"sensitive","img"=>"images/sen4.jpg"],
-["name"=>"Calm Lotion 5","price"=>1000,"old"=>1300,"skin"=>"sensitive","img"=>"images/sen5.jpg"],
+["name"=>"Calming Skin Repair Lotion with Aloe Vera & Chamomile for Sensitive Skin","price"=>999,"old"=>1399,"skin"=>"sensitive","img"=>"assets/images/product/sensitive skin/product1.jpg"],
+["name"=>"Hydra Calm Moisturizing Lotion with Ceramides for Dry & Sensitive Skin ","price"=>1099,"old"=>1499,"skin"=>"sensitive","img"=>"assets/images/product/sensitive skin/product2.jpg"],
+["name"=>"Soothing Face Lotion with Rose Water & Vitamin E for Irritated Skin","price"=>949,"old"=>1299,"skin"=>"sensitive","img"=>"assets/images/product/sensitive skin/product3.jpg"],
+["name"=>"Ultra Gentle Daily Lotion for Sensitive & Allergy-Prone Skin (Dermat Tested)","price"=>1199,"old"=>1599,"skin"=>"sensitive","img"=>"assets/images/product/sensitive skin/product4.jpg"],
+["name"=>"Redness Relief Calming Lotion with Green Tea Extract ","price"=>1049,"old"=>1399,"skin"=>"sensitive","img"=>"assets/images/product/sensitive skin/product5.jpg"],
 ];
 ?>
 
@@ -242,7 +242,7 @@ body{
     <div class="select-items" id="dropdownList">
         <div data-value="all">All</div>
         <div data-value="dry">Dry</div>
-        <div data-value="oily">Oily</div>
+        <div data-value="oil">Oil</div>
         <div data-value="combination">Combination</div>
         <div data-value="sensitive">Sensitive</div>
     </div>
